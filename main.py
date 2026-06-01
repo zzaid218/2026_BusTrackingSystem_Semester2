@@ -44,15 +44,11 @@ app.include_router(router)
 # -------------------------------
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    """
-    Serves the main map UI
-    """
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "GOOGLE_MAPS_API_KEY": GOOGLE_MAPS_API_KEY
         }
     )
-
 

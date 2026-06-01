@@ -13,8 +13,8 @@ class DistanceMatrix:
         # """
         # Compute ETA from each bus to each stop using Google Distance Matrix API.
         # """
-        buses = self.buses_service.buses()
-        stops = self.stops_services.populate_stops()
+        buses = await self.buses_service.buses()
+        stops = await self.stops_services.populate_stops()
         if not buses or not stops:
             return {"error": "No buses or stops defined"}
 
