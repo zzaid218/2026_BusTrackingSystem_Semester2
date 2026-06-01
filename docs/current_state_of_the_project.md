@@ -153,7 +153,7 @@ This section records current code mismatches only. No implementation guidance.
 
 Key files: `src/geo_map/route.py`, `static/index.js`.
 
-## 2. `/api/distance/eta` data flow
+## 2. [FIXED] `/api/distance/eta` data flow
 
 `distance_metrix` calls async bus/stop services without `await`, so values become coroutine objects instead of lists. Same endpoint also ignores frontend query params (`origins`, `destinations`) and returns a different shape than `fetchETA` expects.
 
@@ -207,7 +207,7 @@ Key file: `src/geo_map/services/buses.py`.
 
 Key files: `main.py`, `src/geo_map/route.py`, `src/geo_map/services/stops.py`.
 
-## 11. Google API error handling is thin
+## 11. [FIXED] Google API error handling is thin
 
 Geocoding and Distance Matrix services assume expected Google response fields exist. Network errors, quota errors, invalid keys, or unexpected JSON can surface as runtime errors.
 
@@ -251,4 +251,5 @@ Original plan includes Supabase, auth, dashboards, ML models, BusBot, realtime u
 
 | Date | Note |
 |------|------|
+| 2026-06-01 | Marked issues #2 and #11 as fixed after code audit |
 | 2026-05-20 | Initial state review |
