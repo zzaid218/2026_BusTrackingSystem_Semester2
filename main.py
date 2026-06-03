@@ -3,17 +3,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
-from src.geo_map.services.stops import PopulateStops
-from src.geo_map.route import router
+from src.geo_map.route import router, stops_services
 from src.utils.config import GOOGLE_MAPS_API_KEY
 
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Populate geocoded stops once at startup
-    service = PopulateStops()
-    await service.populate_stops()
+    await stops_services.populate_stops() #new
 
     yield
  

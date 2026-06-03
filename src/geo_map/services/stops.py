@@ -16,6 +16,8 @@ class PopulateStops:
         """
         Geocode all stops once and store in memory.
         """
+        if self.geocoding_stops: #new
+            return jsonable_encoder(self.geocoding_stops) #new
 
         for stop in stops:
             geo = await self.geocoding.geocode_address(stop["name"])
