@@ -58,4 +58,4 @@ async def get_routes():
         "path": [stop["location"] for stop in content]
     }
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=dynamic_route)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=[dynamic_route])
