@@ -5,12 +5,15 @@
     <script type="module" 
       src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js">
     </script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&libraries=geometry">
+    </script>
     <link rel="stylesheet" href="/static/style.css"/>
   </head>
   <body>
-    <!-- Load Google Maps API using your API key -->
-    <gmpx-api-loader key="{{ GOOGLE_MAPS_API_KEY }}" >
-    </gmpx-api-loader>
+    <!-- Load Google Maps API with the Geometry library enabled -->
 
     <!-- Google Map component -->
           <gmp-map zoom="16" map-id="DEMO_MAP_ID"

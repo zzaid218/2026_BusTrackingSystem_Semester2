@@ -5,6 +5,7 @@ from src.geo_map.model import Bus, Stop, Route
 from src.geo_map.services.buses import PopulateBuses
 from src.geo_map.services.stops import PopulateStops
 from src.geo_map.services.distance import DistanceMatrix
+from src.geo_map.services.directions import DirectionsService
 from src.geo_map.services.geocoding import GeocodingService
 
 router = APIRouter(prefix="/api")
@@ -12,6 +13,7 @@ buses_service = PopulateBuses()
 stops_services = PopulateStops()
 distance_services = DistanceMatrix()
 geo_coding_service = GeocodingService()
+directions_service = DirectionsService()
 
 @router.get("/buses", tags=["Buses"], response_model=List[Bus], response_class=JSONResponse)
 async def get_buses():
@@ -59,3 +61,12 @@ async def get_routes():
     }
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=[dynamic_route])
+
+
+@router.get("/directions", tags=["Directions"])
+async def get_directions(origin: str = Query(...), destination: str = Query(...), mode: str | None = Query(None), alternatives: bool = Query(False)):
+    """Proxy to the Directions service. Returns simplified `routes` array."""
+    content = await directions_service.get_directions(origin, destination, mode, alternatives)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=content)
+
+

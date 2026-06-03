@@ -89,6 +89,7 @@ class MapApp {
     this.stops = [];
     this.routes = [];
     this.routePath = [];
+    this.directionsPolyline = null;
 
   }
 
@@ -106,6 +107,8 @@ class MapApp {
     await this.loadRoutes();
   
     await this.loadBuses();
+
+  await this.showDirections("Amman", "Zarqa");
    }
 
   /* ===== API CALLS ===== */
@@ -185,6 +188,46 @@ async loadStops() {
       this.routes.push(new Route(route, this.map));
     });
   } 
+
+  async showDirections(origin, destination) {
+    if (!this.map) {
+      console.warn("Map is not ready for directions rendering.");
+      return;
+    }
+
+    const data = await getDirections(origin, destination);
+
+    if (!data.routes || data.routes.length === 0) {
+      console.warn("No directions route returned from API.");
+      return;
+    }
+
+    const route = data.routes[0];
+
+    if (!route.overview_polyline || !route.overview_polyline.points) {
+      console.warn("Directions route did not include an overview polyline.");
+      return;
+    }
+
+    const { encoding } = google.maps.geometry ?? await google.maps.importLibrary("geometry");
+    const path = encoding.decodePath(route.overview_polyline.points);
+
+    if (this.directionsPolyline) {
+      this.directionsPolyline.setMap(null);
+    }
+
+    this.directionsPolyline = new google.maps.Polyline({
+      path,
+      map: this.map,
+      geodesic: true,
+      strokeColor: "#1a73e8",
+      strokeOpacity: 0.9,
+      strokeWeight: 5
+    });
+
+    console.log(`Distance: ${route.legs?.[0]?.distance?.text ?? "N/A"}`);
+    console.log(`Duration: ${route.legs?.[0]?.duration?.text ?? "N/A"}`);
+  }
   
 }
  
@@ -214,3 +257,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const app = new MapApp();
   app.init();
 });
+
+async function getDirections(origin, destination) {
+    const response = await fetch(
+        `/api/directions?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`
+    );
+
+    return await response.json();
+}
