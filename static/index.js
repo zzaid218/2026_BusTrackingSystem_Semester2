@@ -109,48 +109,29 @@ class MapApp {
    }
 
   /* ===== API CALLS ===== */
- 
- 
+  async loadBuses() {
+    const response = await fetch("/api/buses");
+    const data = await response.json();
 
-//   async loadBuses() {
-//     const response = await fetch("/api/buses");
-//     const data = await response.json();
+    data.forEach(async bus => {
+      let busObj; //new
+      if (this.buses.has(bus.id)) {
+        busObj = this.buses.get(bus.id); //new
+        busObj.update(bus.location);
+      } else {
+        busObj = new Bus(bus, this.map); //new
+        this.buses.set(bus.id, busObj);
+      }
 
-//     data.forEach(async bus => {
-//       if (this.buses.has(bus.id)) {
-//         this.buses.get(bus.id).update(bus.location);
-//      } else {
-//         const busObj = new Bus(bus, this.map);
-
-//        // Optional: get address from backend
-//         const addr = await fetch(`/api/geocode/reverse?lat=${bus.location.lat}&lng=${bus.location.lng}`).then(r => r.json());
-//         busObj.infoWindow.setContent(`<strong>Bus ${bus.id}</strong><br>${addr.formatted_address}`);
-
-//        this.buses.set(bus.id, busObj);
-//       }
-//    });
-//  }
- 
-
- async loadBuses() {
-  const response = await fetch("/api/buses");
-  const data = await response.json();
-
-  data.forEach(async bus => {
-    if (this.buses.has(bus.id)) {
-      this.buses.get(bus.id).update(bus.location);
-    } else {
-      const busObj = new Bus(bus, this.map);
-      this.buses.set(bus.id, busObj);
-    }
-
-    // Example: show ETA to first stop
-    if (this.stops.length > 0) {
-      const eta = await fetchETA(bus.location, this.stops[0].position);
-      busObj.infoWindow.setContent(`<strong>Bus ${bus.id}</strong><br>ETA to ${this.stops[0].name}: ${Math.round(eta.etaSeconds/60)} min`);
-    }
-  });
-}
+      // Example: show ETA to first stop
+      if (this.stops.length > 0) {
+        const eta = await fetchETA(bus.location, this.stops[0].position);
+        if (eta) { //new
+          busObj.infoWindow.setContent(`<strong>Bus ${bus.id}</strong><br>ETA to ${this.stops[0].name}: ${Math.round(eta.etaSeconds/60)} min`);
+        }
+      }
+    });
+  }
 
  
 
