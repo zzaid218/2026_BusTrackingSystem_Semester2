@@ -27,8 +27,8 @@ async def get_stops():
 
 
 @router.get("/distance/eta",  tags=["Distance Matrix"])
-async def get_eta():
-    content = await distance_services.distance_metrix()
+async def get_eta(origins: str = Query(...), destinations: str = Query(...)): #new
+    content = await distance_services.distance_metrix(origins, destinations) #new
     return JSONResponse(status_code=status.HTTP_200_OK, content=content)
 
 
@@ -58,4 +58,4 @@ async def get_routes():
         "path": [stop["location"] for stop in content]
     }
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=dynamic_route)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=[dynamic_route]) #new
