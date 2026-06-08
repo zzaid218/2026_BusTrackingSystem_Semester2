@@ -1,5 +1,5 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, Float, ForeignKey, Integer, Table, Uuid, text
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 PredictionComparison = Table(
     "prediction_comparisons",

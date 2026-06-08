@@ -1,7 +1,7 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, Float, ForeignKey, Index, Integer, Table, Uuid, text
 from sqlalchemy.dialects.postgresql import JSONB
 from geoalchemy2 import Geography
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 GPSLocation = Table(
     "gps_locations",

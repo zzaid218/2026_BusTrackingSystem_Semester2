@@ -1,6 +1,6 @@
 from sqlalchemy import CheckConstraint, Column, Float, Integer, String, Table
 from geoalchemy2 import Geometry
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 Stop = Table(
     "stops",

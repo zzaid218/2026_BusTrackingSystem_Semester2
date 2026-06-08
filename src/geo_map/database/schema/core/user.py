@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Enum, String, Table, Uuid, text
 
-from geo_map.database.schema.base import metadata
-from geo_map.database.schema.enums import UserRole
+from src.geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.enums import UserRole
 
 User = Table(
     "users",

@@ -1,5 +1,5 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, Float, String, Table, Uuid, text
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 GeocodingCache = Table(
     "geocoding_caches",

@@ -1,6 +1,6 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, Enum, ForeignKey, Index, Integer, Table, Uuid
-from geo_map.database.schema.base import metadata
-from geo_map.database.schema.enums import TripStatus
+from src.geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.enums import TripStatus
 
 Trip = Table(
     "trips",

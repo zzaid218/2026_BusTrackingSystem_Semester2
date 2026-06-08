@@ -1,5 +1,5 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, ForeignKey, Integer, Table, UniqueConstraint, Uuid, text
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 StopArrival = Table(
     "stop_arrivals",

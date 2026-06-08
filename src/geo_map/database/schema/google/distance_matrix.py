@@ -1,5 +1,5 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, Float, ForeignKey, Integer, JSON, String, Table, Uuid, text
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 DistanceMatrixLog = Table(
     "distance_matrix_logs",

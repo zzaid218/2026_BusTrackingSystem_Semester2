@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from geoalchemy2 import Geometry
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 Route = Table(
     "routes",

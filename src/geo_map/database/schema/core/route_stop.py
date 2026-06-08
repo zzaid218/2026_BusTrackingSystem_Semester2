@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, Table, UniqueConstraint
 
-from geo_map.database.schema.base import metadata
+from src.geo_map.database.schema.base import metadata
 
 RouteStop = Table(
     "route_stops",
